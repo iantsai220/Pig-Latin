@@ -7,11 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSString+PigLatin.h"
+
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+        
+        NSLog(@"Enter sentence");
+        
+        char str[1025];
+        
+        fgets(str, 1025, stdin);
+        
+        NSString *string = [[NSString alloc] initWithUTF8String:str];
+        
+        NSString *modified = [string stringByPigLatinization];
+        
+        NSLog(@"%@", modified);
+  
     }
     return 0;
 }

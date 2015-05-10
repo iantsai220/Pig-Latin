@@ -10,4 +10,63 @@
 
 @implementation NSString (PigLatin)
 
+-(NSString *)stringByPigLatinization{
+    
+    NSMutableArray *stringArray = [[self componentsSeparatedByString:@" "] mutableCopy];
+    
+    NSString *addAy = @"ay";
+    
+    NSCharacterSet *vowelSet = [NSCharacterSet characterSetWithCharactersInString:@"aeiouyAEIOUY"];
+    
+    NSString *modifyString;
+    
+//    NSLog(@"%lu", stringArray.count);
+    
+    for (int i = 0; i < stringArray.count; i++) {
+        
+        //for each word
+        modifyString = stringArray[i];
+        
+        //find first consonant
+        NSRange firstRange = [modifyString rangeOfCharacterFromSet:vowelSet];
+        
+        NSString *firstHalfString = [modifyString substringWithRange:NSMakeRange(0, firstRange.location)];
+        
+        NSString *secondHalfString = [modifyString substringWithRange:NSMakeRange(firstRange.location, modifyString.length - firstRange.location)];
+
+        //move to the end and add ay
+        modifyString = [[secondHalfString stringByAppendingString:firstHalfString] stringByAppendingString:addAy];
+    
+//        NSLog(@"%@", modifyString);
+        stringArray[i] = modifyString;
+        
+    }
+    
+    NSString *pigLatin = [stringArray componentsJoinedByString:@" "];
+//    NSLog(@"%@", pigLatin);
+
+    return pigLatin;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @end
