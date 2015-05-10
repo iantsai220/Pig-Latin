@@ -12,11 +12,9 @@
 
 -(NSString *)stringByPigLatinization{
     
-    NSMutableArray *stringArray = [[self componentsSeparatedByString:@" "] mutableCopy];
+    NSArray *stringArray = [self componentsSeparatedByString:@" "];
     
-    NSString *addAy = @"ay";
-    
-    NSCharacterSet *vowelSet = [NSCharacterSet characterSetWithCharactersInString:@"aeiouyAEIOUY"];
+    NSMutableArray *modifiedStringArray = [NSMutableArray array];
     
     NSString *modifyString;
     
@@ -27,26 +25,35 @@
         //for each word
         modifyString = stringArray[i];
         
-        //find first consonant
-        NSRange firstRange = [modifyString rangeOfCharacterFromSet:vowelSet];
-        
-        NSString *firstHalfString = [modifyString substringWithRange:NSMakeRange(0, firstRange.location)];
-        
-        NSString *secondHalfString = [modifyString substringWithRange:NSMakeRange(firstRange.location, modifyString.length - firstRange.location)];
-
-        //move to the end and add ay
-        modifyString = [[secondHalfString stringByAppendingString:firstHalfString] stringByAppendingString:addAy];
-    
-//        NSLog(@"%@", modifyString);
-        stringArray[i] = modifyString;
+        [modifiedStringArray insertObject:[modifyString modifyWord] atIndex:i];
         
     }
     
-    NSString *pigLatin = [stringArray componentsJoinedByString:@" "];
+    NSString *pigLatin = [modifiedStringArray componentsJoinedByString:@" "];
 //    NSLog(@"%@", pigLatin);
 
     return pigLatin;
 
+}
+
+-(NSString *)modifyWord {
+    
+    NSString *addAy = @"ay";
+    
+    NSCharacterSet *vowelSet = [NSCharacterSet characterSetWithCharactersInString:@"aeiouyAEIOUY"];
+    
+    //find first consonant
+    NSRange firstRange = [self rangeOfCharacterFromSet:vowelSet];
+    
+    NSString *firstHalfString = [self substringWithRange:NSMakeRange(0, firstRange.location)];
+    
+    NSString *secondHalfString = [self substringWithRange:NSMakeRange(firstRange.location, self.length - firstRange.location)];
+    
+    //move to the end and add ay
+    NSString *modifiedWord = [[secondHalfString stringByAppendingString:firstHalfString] stringByAppendingString:addAy];
+    
+    return modifiedWord;
+    
 }
 
 

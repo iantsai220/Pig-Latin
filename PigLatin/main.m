@@ -21,6 +21,8 @@ int main(int argc, const char * argv[]) {
         
         NSString *string = [[NSString alloc] initWithUTF8String:str];
         
+        string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
         NSString *modified = [string stringByPigLatinization];
         
         NSLog(@"%@", modified);
